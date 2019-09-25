@@ -6,6 +6,7 @@
     Get-Help Get-Help -Examples
 
 # Task 1 - 3.	Получите справку о новых возможностях в PowerShell 4.0 (или выше)
+    Get-Help -Name about_Windows_PowerShell_5.0
 
 # Task 1 - 4.	Получите все командлеты установки значений
     Get-Help Set-* | Where-Object -FilterScript {$_.Category -eq 'Cmdlet'}
