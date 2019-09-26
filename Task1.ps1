@@ -16,7 +16,7 @@
     Get-Command Set-* -Type Cmdlet
 
 # Task 1 - 5.	Получить список команд работы с файлами
-    Get-Command *Item*
+    Get-Command *Item* # с фильтром -Type Cmdlet если нужны только командлеты
 
 # Task 1 - 6.	Получить список команд работы с объектами
     Get-Command *Object*
