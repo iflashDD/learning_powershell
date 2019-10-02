@@ -45,3 +45,11 @@
     Get-ChildItem HKLM:\SOFTWARE\Microsoft | Export-Csv -Path $Home\HKLM_path.csv
 
 # Task 2 -10.Сохранить в XML -файле историческую информацию о командах выполнявшихся в текущем сеансе работы PS.
+    Get-History | Select Id, CommandLine, ExecutionStatus, StartExecutionTime, EndExecutionTime | Export-Clixml -Path C:\Users\Lenovo\cmd_history.xml
+
+# Task 2 -11.Загрузить данные из полученного в п.10 xml-файла и вывести в виде списка информацию о каждой записи, в виде 5 любых (выбранных Вами) свойств.
+    Get-ChildItem C:\Users\Lenovo\cmd_history.xml | Import-Clixml | Format-Table -Property Id, CommandLine, ExecutionStatus, StartExecutionTime, EndExecutionTime
+
+# Task 2 -12.Удалить созданный диск и папку С:\M2T2_ФАМИЛИЯ
+    Remove-PSDrive -Name Z:
+    Remove-Item -Path C:\M2T2_Sikirzhytski -Recurse
