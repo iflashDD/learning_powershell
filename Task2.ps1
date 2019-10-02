@@ -26,4 +26,22 @@
     $Summ
 
 # Task 2 - 6. Вывести список из 6 процессов занимающих дольше всего процессор.
-Get-Process | Sort-Object -Property TotalProcessorTime -descending | Select -First 6 | Format-Table -Property TotalProcessorTime, Name
+    Get-Process | Sort-Object -Property TotalProcessorTime -descending | Select -First 6 | Format-Table -Property TotalProcessorTime, Name
+
+# Task 2 - 7.Вывести список названий и занятую виртуальную память (в Mb) каждого процесса, разделённые знаком тире,
+# при этом если процесс занимает более 100Mb – выводить информацию красным цветом, иначе зелёным.
+    Get-Process | Sort-Object -Property Name, VM  | ForEach-Object {
+         if ((($_.VM/1024)/1024) -gt 100) {
+             Write-Host -ForegroundColor Red  $_.Name (($_.VM/1024)/1024) -Separator "-"} 
+         else {
+             Write-Host -ForegroundColor Green $_.Name (($_.VM/1024)/1024) -Separator "-"}
+    }
+
+# Task 2 -8.Подсчитать размер занимаемый файлами в папке C:\windows (и во всех подпапках) за исключением файлов *.tmp
+    $WindowsFolderSizeInGb = (Get-ChildItem C:\Windows -Force -Recurse -Exclude *.tmp | Measure-Object -Property Length -Sum).Sum / 1024Mb 
+    [System.Math]::Round($WindowsFolderSizeInGb,2)
+
+# Task 2 -9.Сохранить в CSV-файле информацию о записях одной ветви реестра HKLM:\SOFTWARE\Microsoft.
+    Get-ChildItem HKLM:\SOFTWARE\Microsoft | Export-Csv -Path $Home\HKLM_path.csv
+
+# Task 2 -10.Сохранить в XML -файле историческую информацию о командах выполнявшихся в текущем сеансе работы PS.
