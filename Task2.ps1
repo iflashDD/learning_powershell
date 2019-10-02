@@ -49,6 +49,10 @@
 
 # Task 2 -11.Загрузить данные из полученного в п.10 xml-файла и вывести в виде списка информацию о каждой записи, в виде 5 любых (выбранных Вами) свойств.
     Get-ChildItem C:\Users\Lenovo\cmd_history.xml | Import-Clixml | Format-Table -Property Id, CommandLine, ExecutionStatus, StartExecutionTime, EndExecutionTime
+    # не зная о существовании Import-Clixml я создавал [xml]$var, выгружал в неё данные с помощью Get-Content, 
+    # и на сырую, не зная схемы xml пытался парсить данные!!! ВИКТОР, ЗА ЧТО??? ))))) теперь я понимаю, за что 
+    # ненавидят powershell P.S. а ведь у меня почти получилось за два часа это сделать! не буду выкладывать 
+    # листинг, чтобы не сломать психику =)
 
 # Task 2 -12.Удалить созданный диск и папку С:\M2T2_ФАМИЛИЯ
     Remove-PSDrive -Name Z:
