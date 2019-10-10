@@ -84,5 +84,5 @@ else {
 }
 
 if ($help) {
-    Write-Host " Use script [-Path <Path>] [-o] [-s] [-CSVName <FileName>] [-XMLName <FaleName>]"
+    Write-Host " Use script [-Path <Path>] [-o] [-s] [-CSVName <FileName>] [-XMLName <FileName>]"
 }
