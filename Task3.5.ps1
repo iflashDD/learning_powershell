@@ -80,7 +80,7 @@ elseif (!$O -and $S) {
     Save-CSV
 }
 else {
-    Write-Host "Please, choose only one operation '-O' for viewing existing files or '-S' for saving information or '-help' to get help"
+    Write-Host "Please, choose only one of the following options: '-o' for viewing existing files or '-o' for saving information or '-help' to get help"
 }
 
 if ($help) {
