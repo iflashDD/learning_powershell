@@ -33,12 +33,12 @@ function Save-CSV {
     # название обновки, дату накатывания | экспортируем в CSV
     Get-WmiObject -Class win32_quickfixengineering | Where-Object { $_.description -eq "Security Update" } `
     | Select-Object -Property CSName, description, HotFixID, InstalledOn | Export-Csv -Path $Path\$CSVName
-    #Write-Host ("File = " + ("$Path\$CSVName") + " created!")
+    Write-Host ("File = " + ("$Path\$CSVName") + " created!")
 }
 
 function Save-XML {
     Get-ChildItem -Path HKLM:\SOFTWARE\Microsoft | Export-Clixml -Path $Path\$XMLName -Force
-    #Write-Host ("File = " + ("$Path\$XMLName") + " created!")
+    Write-Host ("File = " + ("$Path\$XMLName") + " created!")
 }
 
 function Print-XML {
@@ -73,14 +73,11 @@ elseif (!$O -and $S) {
     }
     #То же самое для второго
     if (!(Test-Path $Path\$XMLName)) {
+        
         New-Item -ItemType File -Path $Path\$XMLName -Force
     }
-    if ($(Save-XML)) {
-        Write-Host ("File = " + ("$Path\$XMLName") + " created!")
-    } 
-    if ($(Save-CSV)) {
-        Write-Host ("File = " + ("$Path\$CSVName") + " created!")
-    }
+    Save-XML
+    Save-CSV
 }
 else {
     Write-Host "Please, choose only one of the following options: '-o' for viewing existing files or '-o' for saving information or '-help' to get help"
