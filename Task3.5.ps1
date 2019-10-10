@@ -31,22 +31,22 @@ param (
 function Save-CSV {
     # Получаем список всех обновлений | вычленяем из них только Security Update | Из полученных данных отбираем только значения целевой машины, 
     # название обновки, дату накатывания | экспортируем в CSV
-    Get-WmiObject -Class win32_quickfixengineering | ? { $_.description -eq "Security Update" } `
+    Get-WmiObject -Class win32_quickfixengineering | Where-Object { $_.description -eq "Security Update" } `
     | Select-Object -Property CSName, description, HotFixID, InstalledOn | Export-Csv -Path $Path\$CSVName
-    Write-Host ("File = " + ("$Path\$CSVName") + " created!")
+    #Write-Host ("File = " + ("$Path\$CSVName") + " created!")
 }
 
 function Save-XML {
     Get-ChildItem -Path HKLM:\SOFTWARE\Microsoft | Export-Clixml -Path $Path\$XMLName -Force
-    Write-Host ("File = " + ("$Path\$XMLName") + " created!")
+    #Write-Host ("File = " + ("$Path\$XMLName") + " created!")
 }
 
 function Print-XML {
-    Import-Clixml -Path $Path\$XMLName | % { Write-Host -ForegroundColor Green $_ }
+    Import-Clixml -Path $Path\$XMLName | ForEach-Object { Write-Host -ForegroundColor Green $_ }
 }
 
 function Print-CSV {
-    Import-Csv -Path $Path\$CSVName | % { Write-Host -ForegroundColor Red $_ }
+    Import-Csv -Path $Path\$CSVName | ForEach-Object { Write-Host -ForegroundColor Red $_ }
 }
 
 # Controller code
@@ -73,11 +73,14 @@ elseif (!$O -and $S) {
     }
     #То же самое для второго
     if (!(Test-Path $Path\$XMLName)) {
-        
         New-Item -ItemType File -Path $Path\$XMLName -Force
     }
-    Save-XML
-    Save-CSV
+    if ($(Save-XML)) {
+        Write-Host ("File = " + ("$Path\$XMLName") + " created!")
+    } 
+    if ($(Save-CSV)) {
+        Write-Host ("File = " + ("$Path\$CSVName") + " created!")
+    }
 }
 else {
     Write-Host "Please, choose only one of the following options: '-o' for viewing existing files or '-o' for saving information or '-help' to get help"
